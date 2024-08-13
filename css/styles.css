@@ -1,4 +1,75 @@
 body {
   background-color: beige;
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.poke-button {
+  background-color:bisque;
+  padding: 5px 20px;
+  margin-bottom: 15px;
+  display: inline-block;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.pokemonButton {
+  list-style-type: none;
+}
+
+.pokemon-list {
+  background-color: rgb(218, 65, 65);
+  font-weight: bold;
+  display: inline-block;
+  padding: 20px 50px;
+  border-radius: 10px;
+  border: 3px black solid;
+}
+
+@media all and (max-width: 500px) {
+  .pokedex {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .poke-button {
+    padding: 10px 20px;
+    text-align: left;
+    display: flex;
+  }
+
+  .pokemon-list li {
+    font-size: 14px;
+  }
+}
+
+@media all and (min-width: 501px) and (max-width: 750px) {
+  .pokedex {
+    width: 80%;
+    padding: 15px;
+  }
+
+  .poke-button {
+    padding: 10px 20px;
+    text-align: left;
+    display: flex;
+  }
+
+  .pokemon-list li {
+    font-size: 15px;
+  }
+}
+
+@media all and (max-width: 750px) {
+  .pokedex {
+    font-size: 14px;
+  }
+
+  .poke-button {
+    padding: 10px 20px;
+    text-align: left;
+    display: flex;
+  }
 }
