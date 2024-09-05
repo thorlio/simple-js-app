@@ -1,48 +1,34 @@
-
 let pokemonRepository = (function () {
 
   let pokemonList = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-  let modalContainer = document.querySelector('#modal-container');
-
-  function add(pokemon) {
-    if (
-      typeof pokemon === "object" &&
-      "name" in pokemon
-    ) {
-      pokemonList.push(pokemon);
-    } else {
-      console.log("pokemon is not correct");
-    }
-  }
 
   function getAll() {
     return pokemonList;
   }
 
-  function showDetails(pokemon) {
-    loadDetails(pokemon).then(function () {
-      showModal(
-      pokemon.name,
-      'Height: ' + pokemon.height,
-      pokemon.imageUrl
-      );
-    });
-  };
+  function add(item) {
+    pokemonList.push(item);
+  }
 
   function addListItem(pokemon) {
-    let pokemonListOf = document.querySelector('.pokemon-list');
+    let ulElement = document.querySelector('.pokemon-list');
     let listItem = document.createElement('li');
-    let button = document.createElement('button');
-    button.innerText = pokemon.name;
-    button.classList.add('poke-button');
-    listItem.appendChild(button);
-    pokemonListOf.appendChild(listItem);
-    listItem.classList.add('pokemonButton');
-    button.addEventListener('click', function () {
+    listItem.classList.add('list-group-item');
+
+    let pokemonButton = document.createElement('button');
+    pokemonButton.innerText = pokemon.name;
+    pokemonButton.classList.add('btn', 'btn-primary', 'btn-block');
+    pokemonButton.setAttribute('data-toggle', 'modal');
+    pokemonButton.setAttribute('data-target', '#pokemonModal');
+
+    pokemonButton.addEventListener('click', function () {
       showDetails(pokemon);
     });
-  };
+
+    listItem.appendChild(pokemonButton);
+    ulElement.appendChild(listItem);
+  }
 
   function loadList() {
     return fetch(apiUrl).then(function (response) {
@@ -54,10 +40,11 @@ let pokemonRepository = (function () {
           detailsUrl: item.url
         };
         add(pokemon);
+        console.log(pokemon);
       });
     }).catch(function (e) {
       console.error(e);
-    })
+    });
   }
 
   function loadDetails(item) {
@@ -73,55 +60,21 @@ let pokemonRepository = (function () {
     });
   }
 
-
-
-  function showModal(title, text, img) {
-    modalContainer.innerHTML = '';
-
-    let modal = document.createElement('div')
-    modal.classList.add('modal')
-
-    let closeButtonElement = document.createElement('button');
-    closeButtonElement.classList.add('modal-close');
-    closeButtonElement.innerText = 'Close';
-    closeButtonElement.addEventListener('click', hideModal);
-
-    let pokemonName = document.createElement('h1');
-    pokemonName.innerText = title;
-
-    let pokemonHeight = document.createElement('p');
-    pokemonHeight.innerText = text;
-
-    let pokemonImage = document.createElement('img');
-    pokemonImage.setAttribute('src', img)
-    
-
-    modal.appendChild(closeButtonElement);
-    modal.appendChild(pokemonName);
-    modal.appendChild(pokemonHeight);
-    modal.appendChild(pokemonImage);
-    modalContainer.appendChild(modal);
-    modalContainer.classList.add('is-visible');
-
+  function showDetails(pokemon) {
+    loadDetails(pokemon).then(function () {
+      showModal(pokemon.name, `Height: ${pokemon.height}`, pokemon.imageUrl);
+    });
   }
 
-  function hideModal() {
-    modalContainer.classList.remove('is-visible');
+  function showModal(title, text, imageUrl) {
+    let modalTitle = document.querySelector('.modal-title');
+    let modalImage = document.querySelector('.pokemon-image');
+    let modalDetails = document.querySelector('.pokemon-details');
+
+    modalTitle.innerText = title;
+    modalImage.src = imageUrl;
+    modalDetails.innerText = text;
   }
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && 
-    modalContainer.classList.contains('is-visible')) {
-    hideModal();
-    }
-  });
-
-  modalContainer.addEventListener('click', (e) => {
-    let target = e.target;
-    if (target === modalContainer) {
-      hideModal();
-    }
-  });
 
   return {
     add: add,
