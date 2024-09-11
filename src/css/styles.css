@@ -1,0 +1,56 @@
+body {
+  margin-top: 60px;
+  justify-content: center;
+}
+
+.title {
+  color: white;
+}
+
+#nav-link {
+  color: white;
+  margin-left: 20px;
+}
+
+.modal-container.is-visible {
+  display: flex;
+}
+
+.modal {
+  background: white;
+  border-radius: 10px;
+  display: absolute;
+  width: 30%;
+  height: 40%;
+  margin-left: 39%;
+  margin-top: 10%;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.pokemon-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.list-group-item {
+  background-color: red;
+  width: 70%;
+  margin-left: 240px;
+}
+
+.btn {
+  background-color: #FFE8C5;
+  color: black;
+  font-weight: bolder;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+#pokemonModal {
+  padding: 10px;
+}
